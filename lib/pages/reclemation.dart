@@ -37,22 +37,22 @@ class _RectlmationState extends State<Rectlmation> {
 
   @override
   void initState() {
+    getDataFromFirestore();
     getData();
     super.initState();
-    
-    getDataFromFirestore();
   }
 
   bool? valid;
   List<QueryDocumentSnapshot> vdata = [];
-  getData() async {
+  Future<void> getData() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('ouvertur_reclemation')
         .get();
-    vdata.addAll(querySnapshot.docs);
-    valid= await vdata[0]['etat'];
-    print(vdata[0]['etat']);
-
+    vdata = querySnapshot.docs; // Remplacer addAll par l'assignation directe
+    setState(() {
+      valid = vdata[0]['etat'];
+    });
+    print(valid);
   }
 
   @override
@@ -82,8 +82,7 @@ class _RectlmationState extends State<Rectlmation> {
           ),
         ],
       ),
-      body:  valid == false ? const ReclmNovld() :
-       Container(
+      body: SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: ListView(

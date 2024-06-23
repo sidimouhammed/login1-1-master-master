@@ -5,14 +5,33 @@ import 'package:login1/login.dart';
 import 'package:login1/pages/about.dart';
 import 'package:login1/pages/profil.dart';
 import 'package:login1/pages/reclemation.dart';
+import 'package:login1/pages/vreclamation.dart';
 
 class Setting extends StatefulWidget {
   @override
   State<Setting> createState() => _SettingState();
 }
 
-
 class _SettingState extends State<Setting> {
+  @override
+  void initState() {
+    super.initState();
+    
+  }
+
+  bool? valid;
+  List<QueryDocumentSnapshot> vdata = [];
+Future<void> getData() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('ouvertur_reclemation')
+        .get();
+    vdata = querySnapshot.docs; // Remplacer addAll par l'assignation directe
+    setState(() {
+      valid = vdata[0]['etat'];
+    });
+    print(valid);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -29,9 +48,27 @@ class _SettingState extends State<Setting> {
         ListTile(
           leading: const Icon(Icons.help),
           title: const Text('Reclemation'),
-          onTap: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const Rectlmation()));
+          onTap: () async {
+            await getData();
+            if (valid == false) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const ReclmNovld();
+                  },
+                ),
+              );
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const Rectlmation();
+                  },
+                ),
+              );
+            }
           },
         ),
         ListTile(

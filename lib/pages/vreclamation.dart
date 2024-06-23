@@ -12,6 +12,11 @@ class _VRecState extends State<ReclmNovld> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
+        title: Text('Reclamation'),
+        centerTitle: true,),
           body: Container(
                 child: Center(
           child: Text(style: TextStyle(

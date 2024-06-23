@@ -69,6 +69,35 @@ class _AfficheReclemationState extends State<AfficheReclemation> {
                   padding: const EdgeInsets.only(top: 5, right: 10, left: 10),
                   child: Card(
                       child: ListTile(
+                         onTap: () {
+              // Action à effectuer lors du clic sur un élément de la liste
+              // Par exemple, afficher un dialogue avec les détails de la réclamation
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Détails de la réclamation"),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                      
+                        Text('${datas[i]['details']}',
+                        style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text("Fermer"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
                     leading: Text((i + 1).toString()),
                     title: Column(
                       //mainAxisAlignment: MainAxisAlignment.spaceEvenly,

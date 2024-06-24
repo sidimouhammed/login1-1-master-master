@@ -36,15 +36,14 @@ class _LoginState extends State<Login> {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _controllerUsername.text, password: _controllerPassword.text);
-   Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const Home();
-                              },
-                            ),
-                          );
-   
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return const Home();
+          },
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
         // Adresse e-mail incorrecte
@@ -95,12 +94,32 @@ class _LoginState extends State<Login> {
                 "Dans",
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              Text(
-                "ISCAE",
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    fontSize: 40, // Taille de la police
-                    fontWeight: FontWeight.bold, // Gras
-                    color: Colors.blue),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Isca",
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                        fontSize: 35, // Taille de la police
+                        fontWeight: FontWeight.bold, // Gras
+                        color: Colors.blue),
+                  ),
+                  Text(
+                    "E",
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                        fontSize: 40, // Taille de la police
+                        fontWeight: FontWeight.bold, // Gras
+                        color: Colors.blue),
+                  ),
+                  Text(
+                    "tudiant",
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                        fontSize: 40, // Taille de la police
+                        fontWeight: FontWeight.bold, // Gras
+                        color: Colors.blue),
+                  ),
+                ],
               ),
               const SizedBox(height: 10),
               Text(
@@ -172,7 +191,7 @@ class _LoginState extends State<Login> {
               ),
               // const SizedBox(height: 60),
               Container(
-                 alignment: Alignment.centerRight,
+                alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -180,13 +199,12 @@ class _LoginState extends State<Login> {
                       MaterialPageRoute(builder: (context) => ForgotPassword()),
                     );
                   },
-                  
                   child: Text("Forgot password?",
                       style: TextStyle(
                           fontSize: 18, decoration: TextDecoration.underline)),
                 ),
               ),
-                const SizedBox(height: 20),
+              const SizedBox(height: 20),
               Column(
                 children: [
                   ElevatedButton(

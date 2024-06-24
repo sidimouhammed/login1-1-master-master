@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +22,54 @@ class Rectlmation extends StatefulWidget {
 }
 
 class _RectlmationState extends State<Rectlmation> {
+  final List<String> S1_RT1 = [
+    'Reseaux 1',
+    'Algorithmique',
+    'MTU',
+    'MS Office',
+    'Electronique',
+    'Supports',
+    'Analyse',
+    'Logique',
+    'Anglais',
+    'Architecture'
+  ];
+
+  String? _selectedName;
+
+  final List<String> S2_RT1 = [
+    'Reseaux 2',
+    'Reseaux cellulaire',
+    'Programmation C ',
+    'Systeme d\' exploitation',
+    'Programmation web',
+    'Programmation python',
+  ];
+
+  String? _selectedNameS2;
+
+  final List<String> S1_DI1 = [
+    'Architecture',
+    'MTU',
+    'MS Office',
+    'Anglais technique 1',
+    'Analyse',
+    'Introdution a la Programmation web',
+  ];
+  String? _selectedDIS1;
+
+  final List<String> S2_DI1 = [
+    'Langage C',
+    'Anglais technique 2',
+    'Algebre lineaire',
+    'Systeme d\' exploitation',
+    'Programmation web 2',
+    'Programmation python',
+    'Modelisation Merise',
+     'Analyse 2',
+  ];
+  String? _selectedDIS2;
+
   final matiereController = TextEditingController();
   final noteController = TextEditingController();
   final descripController = TextEditingController();
@@ -30,10 +80,13 @@ class _RectlmationState extends State<Rectlmation> {
   bool? valide;
   List<Map<String, dynamic>> studentsData = [];
   String? nom;
+  String? nomDMat;
   String? emailUser;
   String? fillier;
   String? reclemationExamen = 'Non';
   String? etat;
+  List<String> vide = [];
+  String? details;
 
   @override
   void initState() {
@@ -58,6 +111,8 @@ class _RectlmationState extends State<Rectlmation> {
   @override
   Widget build(BuildContext context) {
     etat = 'Envoyée';
+    details = '';
+    nomDMat = '';
     final now = DateTime.now();
     valide = false;
     return Scaffold(
@@ -112,7 +167,7 @@ class _RectlmationState extends State<Rectlmation> {
                 Expanded(
                   child: RadioListTile(
                     title: Text('Semestre 2'),
-                    value: "Semester 2",
+                    value: "Semestre 2",
                     groupValue: _semester,
                     onChanged: (value) {
                       setState(() {
@@ -132,15 +187,122 @@ class _RectlmationState extends State<Rectlmation> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: TextField(
-                controller: matiereController,
-                decoration: InputDecoration(
-                    hintText: "Nom de Matiere",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15))),
-              ),
+            // Padding(
+            //   padding: const EdgeInsets.all(10),
+            //   child: TextField(
+            //     controller: matiereController,
+            //     decoration: InputDecoration(
+            //         hintText: "Nom de Matiere",
+            //         border: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(15))),
+            //   ),
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        foreground: Paint()..color = Colors.black),
+                    'Nom de Matiere'),
+                //Réseaux informatiques et Télécommunications L1
+
+                fillier == "Réseaux informatiques et Télécommunications"?
+
+                        _semester == "Semestre 1"
+                            ? Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: DropdownButton(
+                                  value: _selectedName,
+                                  items: S1_RT1.map((String item) {
+                                    return DropdownMenuItem(
+                                        value: item, child: Text(item));
+                                  }).toList(),
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      _selectedName = value!;
+                                    });
+                                    print(_selectedName);
+                                  },
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    size: 40,
+                                  ),
+                                ),
+                              )
+                            : _semester == "Semestre 2"
+                                ? Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: DropdownButton(
+                                      value: _selectedNameS2,
+                                      items: S2_RT1.map((String item) {
+                                        return DropdownMenuItem(
+                                            value: item, child: Text(item));
+                                      }).toList(),
+                                      onChanged: (String? value) {
+                                        setState(() {
+                                          _selectedNameS2 = value!;
+                                        });
+                                        print(_selectedNameS2);
+                                      },
+                                      icon: Icon(
+                                        Icons.arrow_drop_down,
+                                        size: 40,
+                                      ),
+                                    ),
+                                  )
+                                : Text('Appuyer un Semester')
+
+
+                        //Développement Informatique L1
+                :   fillier == "Développement Informatique"?     
+
+                         _semester == "Semestre 1"
+                    ? Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: DropdownButton(
+                          value: _selectedDIS1,
+                          items: S1_DI1.map((String item) {
+                            return DropdownMenuItem(
+                                value: item, child: Text(item));
+                          }).toList(),
+                          onChanged: (String? value) {
+                            setState(() {
+                              _selectedDIS1 = value!;
+                            });
+                            print(_selectedDIS1);
+                          },
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            size: 40,
+                          ),
+                        ),
+                      )
+                    : _semester == "Semestre 2"
+                        ? Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: DropdownButton(
+                              value: _selectedDIS2,
+                              items: S2_RT1.map((String item) {
+                                return DropdownMenuItem(
+                                    value: item, child: Text(item));
+                              }).toList(),
+                              onChanged: (String? value) {
+                                setState(() {
+                                  _selectedDIS2 = value!;
+                                });
+                                print(_selectedDIS2);
+                              },
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                size: 40,
+                              ),
+                            ),
+                          )
+                        : Text('Appuyer un Semester')
+                  : Text('')
+              ],
             ),
             // if (_devoirOuExamen == "Devoir")
             Padding(
@@ -266,22 +428,44 @@ class _RectlmationState extends State<Rectlmation> {
                                   child: Text('Yes'),
                                   isDefaultAction: true,
                                   onPressed: () async {
+                                  //Réseaux informatiques et Télécommunications
+                                    if( fillier == "Réseaux informatiques et Télécommunications"){
+                                    if (_semester == "Semestre 1") {
+                                      var nomMat = _selectedName;
+                                      nomDMat = nomMat;
+                                    } else if (_semester == "Semestre 2") {
+                                      var nomMat = _selectedNameS2;
+                                      nomDMat = nomMat;
+                                    } 
+                                    } 
+                                    else if (fillier == "Développement Informatique"){
+                                    // fillier == "Développement Informatique"?
+                                    if (_semester == "Semestre 1") {
+                                      var nomMat = _selectedDIS1;
+                                      nomDMat = nomMat;
+                                    } else if (_semester == "Semestre 2") {
+                                      var nomMat = _selectedDIS2;
+                                      nomDMat = nomMat;
+                                    }
+                                    }
                                     await saveImage();
+
                                     addDataToSave(
                                         _semester.toString().trim(),
                                         reclemationExamen.toString(),
-                                        matiereController.text.trim(),
+                                        nomDMat,
                                         noteController.text.trim(),
                                         descripController.text.trim(),
                                         valide,
                                         now,
-                                        etat);
+                                        etat,
+                                        details);
 
                                     Navigator.pop(context);
                                     setState(() {
                                       _semester = "";
                                       reclemationExamen = 'Non';
-                                      matiereController.text = "";
+                                      nomDMat = null;
                                       noteController.text = "";
                                       noteController.text = "";
                                       descripController.text = "";
@@ -325,12 +509,12 @@ class _RectlmationState extends State<Rectlmation> {
   }
 
   final credential = FirebaseAuth.instance.currentUser;
-  Future addDataToSave(String semester, reclemationExamen, String nomMat,
-      String note, String descrp, valide, now, etat) async {
+  Future addDataToSave(String semester, reclemationExamen, nomDMat, String note,
+      String descrp, valide, now, etat, details) async {
     await FirebaseFirestore.instance.collection('reclemations').add({
       'semester': semester,
       'reclemationDeExamen': reclemationExamen,
-      'nomMatiere': nomMat,
+      'nomMatiere': nomDMat,
       'noteExact': note,
       'descrip': descrp,
       'valide': valide,
@@ -339,7 +523,8 @@ class _RectlmationState extends State<Rectlmation> {
       'email': emailUser,
       'filiére': fillier,
       'dateEnvoie': now.toString(),
-      'etat': etat
+      'etat': etat,
+      'details': details,
       //'examen'
     });
   }

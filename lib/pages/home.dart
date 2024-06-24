@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
             centerTitle: true,
             expandedHeight: 100,
             flexibleSpace: const FlexibleSpaceBar(
-              title: Text('ISACETUDIANT'),
+              title: Text('IscaEtudiant'),
               centerTitle: false,
             ),
           ),
